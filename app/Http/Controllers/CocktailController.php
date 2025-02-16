@@ -71,7 +71,7 @@ class CocktailController extends Controller
     public function update(Request $request, Cocktail $cocktail)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'image' => 'nullable|string|max:2048',
             'description' => 'nullable|string',
             'glass' => 'nullable|string|max:100',

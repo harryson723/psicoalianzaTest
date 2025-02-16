@@ -9,8 +9,16 @@
             <img src="{{ $coctel['strDrinkThumb'] }}" alt="" class="w-full h-full object-cover">
         </div>
         <div class="mb-5 gap-5 flex items-baseline justify-between">
-            <h3 class="text-left mt-8 text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $coctel['strDrink'] }}
+            <h3 class="text-left mt-8 text-lg font-semibold text-gray-900 dark:text-gray-100">
+                @if ($isDB)
+                    <input type="text" value="{{ $coctel['strDrink'] }}" 
+                        class="bg-transparent border-none w-full" 
+                        onchange="updateCocktail('{{ $coctel['idDrink'] }}', 'title', this.value)">
+                @else
+                    {{ $coctel['strDrink'] }}
+                @endif
             </h3>
+
             @if (!$isDB)
                 <x-common.button
                     onclick="addCocktailToDB({{ $coctel['idDrink'] }}, '{{ addslashes($coctel['strDrink']) }}', '{{ $coctel['strDrinkThumb'] }}', '{{ addslashes(Auth::user()->email) }}')">
@@ -21,14 +29,32 @@
                     Eliminar
                 </x-common.button>
             @endif
+        </div>
 
-        </div>
-        <div
-            class="text-left cocktail-details mt-2 text-sm text-gray-700 dark:text-gray-300 max-h-[300px] overflow-y-auto">
+        <div class="text-left cocktail-details mt-2 text-sm text-gray-700 dark:text-gray-300 max-h-[300px] overflow-y-auto">
             <p class="cocktail-glass"><strong>Vaso recomendado:</strong>
-                {{ $coctel['strGlass'] ?? '' }}</p>
+                @if ($isDB)
+                    <input type="text" value="{{ $coctel['strGlass'] ?? '' }}" 
+                        class="bg-transparent border-none w-full" 
+                        onchange="updateCocktail('{{ $coctel['idDrink'] }}', 'glass', this.value)">
+                @else
+                    {{ $coctel['strGlass'] ?? '' }}
+                @endif
+            </p>
             <p class="cocktail-description"><strong>Instrucciones:</strong>
-                {{ $coctel['strInstructions'] ?? 'No hay instrucciones disponibles.' }}</p>
+                @if ($isDB)
+                    <textarea class="bg-transparent border-none w-full" 
+                        onchange="updateCocktail('{{ $coctel['idDrink'] }}', 'description', this.value)">{{ $coctel['strInstructions'] ?? 'No hay instrucciones disponibles.' }}</textarea>
+                @else
+                    {{ $coctel['strInstructions'] ?? 'No hay instrucciones disponibles.' }}
+                @endif
+            </p>
         </div>
+
+        @if ($isDB)
+            <!-- Inputs ocultos -->
+            <input type="hidden" name="id" value="{{ $coctel['idDrink'] }}">
+            <input type="hidden" name="image" value="{{ $coctel['strDrinkThumb'] }}">
+        @endif
     </div>
 </div>

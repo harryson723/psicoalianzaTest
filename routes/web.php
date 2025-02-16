@@ -45,6 +45,6 @@ Route::middleware('auth')->group(function () {
 Route::resource('api/cocktails', CocktailController::class)
     ->middleware(['auth', 'verified']);
 
-Route::delete('/cocktails/{id}', [CocktailController::class, 'destroy'])->name('cocktails.destroy');
+    
 
 require __DIR__ . '/auth.php';
