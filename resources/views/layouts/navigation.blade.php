@@ -82,6 +82,9 @@
             <x-common.responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-common.responsive-nav-link>
+            <x-common.responsive-nav-link :href="route('mycocktails')" :active="request()->routeIs('mycocktails')">
+                {{ __('Mis cocteles') }}
+            </x-common.responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
